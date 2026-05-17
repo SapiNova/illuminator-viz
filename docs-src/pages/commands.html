@@ -1,58 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Command Reference - Illuminator</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<header class="header">
-  <button class="sidebar-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')" aria-label="Toggle navigation">
-    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h14M3 10h14M3 14h14"/></svg>
-  </button>
-  <a class="header-logo" href="index.html">
-    <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" stroke="#58a6ff" stroke-width="2"/><circle cx="9" cy="10" r="2.5" fill="#58a6ff"/><circle cx="19" cy="8" r="2.5" fill="#bc8cff"/><circle cx="17" cy="18" r="2.5" fill="#3fb950"/><circle cx="7" cy="17" r="2.5" fill="#d29922"/><line x1="9" y1="10" x2="19" y2="8" stroke="#30363d" stroke-width="1.2"/><line x1="19" y1="8" x2="17" y2="18" stroke="#30363d" stroke-width="1.2"/><line x1="7" y1="17" x2="9" y2="10" stroke="#30363d" stroke-width="1.2"/><line x1="7" y1="17" x2="17" y2="18" stroke="#30363d" stroke-width="1.2"/></svg>
-    <span>Illuminator</span>
-  </a>
-  <div class="header-search">
-    <svg class="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M11.5 7a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm-.82 4.74a6 6 0 1 1 1.06-1.06l3.04 3.04a.75.75 0 1 1-1.06 1.06l-3.04-3.04Z"/></svg>
-    <input type="text" id="searchInput" placeholder="Search documentation..." autocomplete="off">
-    <div class="search-results" id="searchResults"></div>
-  </div>
-  <div class="search-kbd"><kbd>Ctrl</kbd> + <kbd>K</kbd></div>
-  <a href="../" class="header-site-link">Website</a>
-</header>
-
-<nav class="sidebar" id="sidebar">
-  <div class="nav-section">
-    <div class="nav-section-title">Getting Started</div>
-    <a class="nav-link" href="index.html">Overview</a>
-    <a class="nav-link" href="shortcuts.html">Keyboard Shortcuts</a>
-  </div>
-  <div class="nav-section">
-    <div class="nav-section-title">Using Illuminator</div>
-    <a class="nav-link" href="tools.html">Tools</a>
-    <a class="nav-link" href="layouts.html">Layout Algorithms</a>
-    <a class="nav-link" href="ui.html">User Interface</a>
-  </div>
-  <div class="nav-section">
-    <div class="nav-section-title">Commands & Scripting</div>
-    <a class="nav-link active" href="commands.html">Command Reference</a>
-    <a class="nav-link" href="query.html">Query Language</a>
-  </div>
-  <div class="nav-section">
-    <div class="nav-section-title">Data</div>
-    <a class="nav-link" href="data.html">File Formats & Attributes</a>
-  </div>
-</nav>
-
+---
+title: Command Reference - Illuminator
+path: commands/index.html
+logoHref: /docs/
+---
 <main class="main">
 
   <section class="section">
     <h2>Command Reference</h2>
-    <p>Illuminator has a built-in command system accessible through the <a href="ui.html#console">console</a>. Commands can also be stored in <a href="query.html#scripting">script files</a> and replayed with <code>execute</code>. Every command supports a <code>help</code> argument for inline documentation.</p>
+    <p>Illuminator has a built-in command system accessible through the <a href="/docs/ui/#console">console</a>. Commands can also be stored in <a href="/docs/query/#scripting">script files</a> and replayed with <code>execute</code>. Every command supports a <code>help</code> argument for inline documentation.</p>
 
     <div class="card-grid" style="margin-bottom: 32px;">
       <a class="card" href="#load"><h4>load</h4><p>Load a graph from file</p></a>
@@ -150,7 +105,7 @@
           <tr><td>invert</td><td>None</td><td>Invert the current selection</td></tr>
           <tr><td>none / clear</td><td>None</td><td>Clear the selection</td></tr>
           <tr><td>expand</td><td>&lt;depth&gt;</td><td>BFS expansion of the selection by the given depth</td></tr>
-          <tr><td>where</td><td>&lt;expression&gt;</td><td>Select nodes matching a logical expression (see <a href="query.html">Query Language</a>)</td></tr>
+          <tr><td>where</td><td>&lt;expression&gt;</td><td>Select nodes matching a logical expression (see <a href="/docs/query/">Query Language</a>)</td></tr>
         </table>
         <h4>Examples</h4>
 <pre><code><span class="code-keyword">select</span> all
@@ -298,7 +253,7 @@
         <div class="cmd-syntax">
           <pre><code><span class="code-keyword">create</span> subset <span class="code-param">&lt;name&gt;</span></code></pre>
         </div>
-        <p>Creates a named subset from the currently selected nodes. Subsets can be recalled in the <a href="ui.html#subset">Subset window</a> to quickly restore selections.</p>
+        <p>Creates a named subset from the currently selected nodes. Subsets can be recalled in the <a href="/docs/ui/#subset">Subset window</a> to quickly restore selections.</p>
         <h4>Example</h4>
 <pre><code><span class="code-keyword">select</span> where (group == <span class="code-string">"cluster_a"</span>)
 <span class="code-keyword">create</span> subset cluster_a</code></pre>
@@ -320,20 +275,16 @@
         <h4>Example</h4>
 <pre><code><span class="code-keyword">execute</span> scripts/setup.txt</code></pre>
         <p>You can also run scripts from <strong>Script &gt; Execute...</strong> in the menu bar, which opens a file picker. Recently run scripts appear in the Script menu for quick re-execution.</p>
-        <p>See <a href="query.html#scripting">Script Files</a> for syntax details and a full example script.</p>
+        <p>See <a href="/docs/query/#scripting">Script Files</a> for syntax details and a full example script.</p>
       </div>
     </div>
 
   </section>
 
   <div class="page-nav">
-    <a href="ui.html">&larr; User Interface</a>
+    <a href="/docs/ui/">&larr; User Interface</a>
     <span class="spacer"></span>
-    <a href="query.html">Query Language &rarr;</a>
+    <a href="/docs/query/">Query Language &rarr;</a>
   </div>
 
 </main>
-
-<script src="search.js"></script>
-</body>
-</html>

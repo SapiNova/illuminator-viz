@@ -1,0 +1,73 @@
+---
+title: File Formats & Attributes - Illuminator
+path: data/index.html
+logoHref: /docs/
+---
+<main class="main">
+
+  <section class="section" id="formats">
+    <h2>File Formats</h2>
+
+    <h3><code>.ilu</code> &mdash; Native Format</h3>
+    <p>The native Illuminator binary format. This is the only format that preserves all graph data including node positions, styles, attributes, and edge information. Load with <code>load file.ilu</code> or <strong>File &gt; Open</strong>. Save with <strong>File &gt; Save As</strong>.</p>
+    <p>Use <code>.ilu</code> files as your primary working format when you want to save and resume a session with all visual state intact.</p>
+
+    <h3><code>.csv</code> &mdash; Comma-Separated Values</h3>
+    <p>Standard comma-delimited text files. For <strong>File &gt; Open</strong> and the CSV dialog, the first row is normally a header with column names. For the <a href="/docs/commands/#load"><code>load</code></a> and <a href="/docs/commands/#import"><code>import</code></a> commands, the same applies by default (<code>header=true</code>). If your file has no header row, pass <code>header=false</code> and refer to columns by 0-based index instead of names.</p>
+    <ul>
+      <li>Default delimiter: <code>,</code> (comma)</li>
+      <li>Requires a <code>target</code> parameter in the <a href="/docs/commands/#load"><code>load</code></a> command to define which columns represent edge endpoints</li>
+      <li>Additional columns can be imported as node or edge attributes</li>
+    </ul>
+
+    <h3><code>.tsv</code> &mdash; Tab-Separated Values</h3>
+    <p>Same as CSV but with tab characters as the default delimiter.</p>
+    <ul>
+      <li>Default delimiter: <code>\t</code> (tab)</li>
+      <li>All other rules are the same as CSV</li>
+    </ul>
+
+    <h3>Delimiter Override</h3>
+    <p>Both <code>load</code> and <code>import</code> accept a <code>delimiter</code> parameter to override the default:</p>
+<pre><code><span class="code-comment">// Use semicolons</span>
+<span class="code-keyword">load</span> data.csv target=(a, b, name) delimiter=<span class="code-string">";"</span>
+
+<span class="code-comment">// Explicit tab for a .csv file</span>
+<span class="code-keyword">load</span> data.csv target=(a, b, name) delimiter=tab</code></pre>
+  </section>
+
+  <section class="section" id="attributes">
+    <h2>Attributes</h2>
+    <p>Graph objects (nodes and edges) carry typed attributes that power labelling, filtering with the <a href="/docs/query/">query language</a>, and data-driven styling with the <a href="/docs/commands/#map"><code>map</code></a> command.</p>
+
+    <h3>Supported Types</h3>
+    <table class="param-table">
+      <tr><th>Type</th><th>Storage</th><th>Description</th><th>Use Cases</th></tr>
+      <tr><td>float</td><td>32-bit float</td><td>Floating-point numbers</td><td>Scores, weights, continuous values</td></tr>
+      <tr><td>int32</td><td>Signed 32-bit</td><td>Signed integers</td><td>Counts, ranks, signed identifiers</td></tr>
+      <tr><td>uint32</td><td>Unsigned 32-bit</td><td>Unsigned integers</td><td>Node IDs, categories, flags</td></tr>
+      <tr><td>string</td><td>Variable-length</td><td>Per-object string</td><td>Names, labels, unique text</td></tr>
+      <tr><td>shared_string</td><td>Interned</td><td>Shared/interned string</td><td>Categories, groups (memory-efficient for repeated values)</td></tr>
+    </table>
+
+    <h3>Usage by Feature</h3>
+    <table class="param-table">
+      <tr><th>Feature</th><th>Accepted Types</th><th>Details</th></tr>
+      <tr><td><a href="/docs/commands/#map">map</a> (data-driven styling)</td><td>float, int32, uint32</td><td>Only numeric attributes can drive visual mappings</td></tr>
+      <tr><td><a href="/docs/commands/#set">set label content</a></td><td>string, shared_string</td><td>Only string attributes can be used as label text sources</td></tr>
+      <tr><td><a href="/docs/query/">Query expressions</a></td><td>All types</td><td>Numeric attributes compare against numbers; string attributes compare against quoted strings</td></tr>
+      <tr><td><a href="/docs/commands/#import">import</a></td><td>All types</td><td>Any type can be imported from CSV columns</td></tr>
+    </table>
+
+    <h3>Specifying Types</h3>
+    <p>Attribute types are specified when loading or importing data. They appear as the middle field in attribute tuples:</p>
+<pre><code><span class="code-comment">// In the attributes parameter: (column_name, type, attribute_name)</span>
+<span class="code-keyword">load</span> data.csv target=(a, b, name) attributes=[(<span class="code-param">weight</span>, <span class="code-string">float</span>, <span class="code-param">weight</span>), (<span class="code-param">category</span>, <span class="code-string">shared_string</span>, <span class="code-param">category</span>)]</code></pre>
+  </section>
+
+  <div class="page-nav">
+    <a href="/docs/query/">&larr; Query Language</a>
+    <span class="spacer"></span>
+  </div>
+
+</main>

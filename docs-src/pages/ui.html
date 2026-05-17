@@ -1,53 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>User Interface - Illuminator</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<header class="header">
-  <button class="sidebar-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')" aria-label="Toggle navigation">
-    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h14M3 10h14M3 14h14"/></svg>
-  </button>
-  <a class="header-logo" href="index.html">
-    <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" stroke="#58a6ff" stroke-width="2"/><circle cx="9" cy="10" r="2.5" fill="#58a6ff"/><circle cx="19" cy="8" r="2.5" fill="#bc8cff"/><circle cx="17" cy="18" r="2.5" fill="#3fb950"/><circle cx="7" cy="17" r="2.5" fill="#d29922"/><line x1="9" y1="10" x2="19" y2="8" stroke="#30363d" stroke-width="1.2"/><line x1="19" y1="8" x2="17" y2="18" stroke="#30363d" stroke-width="1.2"/><line x1="7" y1="17" x2="9" y2="10" stroke="#30363d" stroke-width="1.2"/><line x1="7" y1="17" x2="17" y2="18" stroke="#30363d" stroke-width="1.2"/></svg>
-    <span>Illuminator</span>
-  </a>
-  <div class="header-search">
-    <svg class="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M11.5 7a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm-.82 4.74a6 6 0 1 1 1.06-1.06l3.04 3.04a.75.75 0 1 1-1.06 1.06l-3.04-3.04Z"/></svg>
-    <input type="text" id="searchInput" placeholder="Search documentation..." autocomplete="off">
-    <div class="search-results" id="searchResults"></div>
-  </div>
-  <div class="search-kbd"><kbd>Ctrl</kbd> + <kbd>K</kbd></div>
-  <a href="../" class="header-site-link">Website</a>
-</header>
-
-<nav class="sidebar" id="sidebar">
-  <div class="nav-section">
-    <div class="nav-section-title">Getting Started</div>
-    <a class="nav-link" href="index.html">Overview</a>
-    <a class="nav-link" href="shortcuts.html">Keyboard Shortcuts</a>
-  </div>
-  <div class="nav-section">
-    <div class="nav-section-title">Using Illuminator</div>
-    <a class="nav-link" href="tools.html">Tools</a>
-    <a class="nav-link" href="layouts.html">Layout Algorithms</a>
-    <a class="nav-link active" href="ui.html">User Interface</a>
-  </div>
-  <div class="nav-section">
-    <div class="nav-section-title">Commands & Scripting</div>
-    <a class="nav-link" href="commands.html">Command Reference</a>
-    <a class="nav-link" href="query.html">Query Language</a>
-  </div>
-  <div class="nav-section">
-    <div class="nav-section-title">Data</div>
-    <a class="nav-link" href="data.html">File Formats & Attributes</a>
-  </div>
-</nav>
-
+---
+title: User Interface - Illuminator
+path: ui/index.html
+logoHref: /docs/
+---
 <main class="main">
 
   <section class="section">
@@ -95,7 +50,7 @@
     <p>An <strong>Expand Selection</strong> dialog is also accessible here, letting you grow the selection outward along graph edges by a specified BFS depth.</p>
 
     <h3 id="layout">Layout Window</h3>
-    <p>Contains collapsible sections for each layout algorithm with their tunable parameters and apply buttons. See the <a href="layouts.html">Layout Algorithms</a> page for parameter details.</p>
+    <p>Contains collapsible sections for each layout algorithm with their tunable parameters and apply buttons. See the <a href="/docs/layouts/">Layout Algorithms</a> page for parameter details.</p>
     <ul>
       <li><strong>Force-Directed (Live)</strong> &mdash; Enable/disable toggle plus repulsion, spring strength, ideal edge length sliders. Fix selected nodes checkbox.</li>
       <li><strong>Random</strong> &mdash; Spacing slider and Apply button</li>
@@ -109,10 +64,10 @@
       <li>Selecting a subset shows its nodes in the right panel</li>
       <li>Subsets can be created, updated, selected (restoring the selection), or deleted</li>
     </ul>
-    <p>Subsets can also be created via the <a href="commands.html#create"><code>create subset</code></a> command.</p>
+    <p>Subsets can also be created via the <a href="/docs/commands/#create"><code>create subset</code></a> command.</p>
 
     <h3 id="console">Console</h3>
-    <p>Toggle via <strong>View &gt; Console</strong>. Type any command and press Enter to execute it. All <a href="commands.html">commands</a> work here, and error messages and script output are displayed inline. The console is essential for using the <a href="query.html">query language</a> and running <a href="query.html#scripting">scripts</a>.</p>
+    <p>Toggle via <strong>View &gt; Console</strong>. Type any command and press Enter to execute it. All <a href="/docs/commands/">commands</a> work here, and error messages and script output are displayed inline. The console is essential for using the <a href="/docs/query/">query language</a> and running <a href="/docs/query/#scripting">scripts</a>.</p>
 
     <h3 id="menus">Menu Bar</h3>
     <p>The menu bar at the top of the application provides access to all major features:</p>
@@ -135,13 +90,9 @@
   </section>
 
   <div class="page-nav">
-    <a href="layouts.html">&larr; Layout Algorithms</a>
+    <a href="/docs/layouts/">&larr; Layout Algorithms</a>
     <span class="spacer"></span>
-    <a href="commands.html">Command Reference &rarr;</a>
+    <a href="/docs/commands/">Command Reference &rarr;</a>
   </div>
 
 </main>
-
-<script src="search.js"></script>
-</body>
-</html>

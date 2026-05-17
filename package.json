@@ -1,0 +1,8 @@
+{
+  "name": "illuminator-viz",
+  "private": true,
+  "scripts": {
+    "build:docs": "node scripts/build-docs.mjs",
+    "extract:docs": "node scripts/extract-pages.mjs"
+  }
+}

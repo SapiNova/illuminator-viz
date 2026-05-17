@@ -1,0 +1,46 @@
+---
+title: Layout Algorithms - Illuminator
+path: layouts/index.html
+logoHref: /docs/
+---
+<main class="main">
+
+  <section class="section">
+    <h2>Layout Algorithms</h2>
+    <p>In addition to the <a href="/docs/tools/">interactive tools</a> (line and arc), Illuminator provides automatic layout algorithms accessible from the <strong>Layout</strong> menu or the <a href="/docs/ui/#layout">Layout window</a>.</p>
+
+    <h3 id="spring">Force-Directed (Spring) Layout</h3>
+    <p>A live simulation where nodes repel each other while edges act as springs pulling connected nodes together. The layout runs continuously in the background and can be toggled on/off from the Layout menu or window.</p>
+    <table class="param-table">
+      <tr><th>Parameter</th><th>Range</th><th>Description</th></tr>
+      <tr><td>Repulsion strength</td><td>0 &ndash; 50,000</td><td>Controls how strongly nodes push each other apart</td></tr>
+      <tr><td>Spring strength</td><td>0 &ndash; 2</td><td>Controls how strongly edges pull connected nodes together</td></tr>
+      <tr><td>Ideal edge length</td><td>1 &ndash; 1,000</td><td>Target rest-length distance between connected nodes</td></tr>
+      <tr><td>Fix Selected Nodes</td><td>Toggle</td><td>Pin selected nodes in place so the simulation does not move them</td></tr>
+    </table>
+    <p>The spring layout is especially useful during exploration: enable it, then select and fix key nodes to anchor parts of the graph while the rest settles into a readable arrangement.</p>
+
+    <h3 id="random">Random Layout</h3>
+    <p>Positions all selected nodes at random locations. Useful as a starting point before applying a force-directed or GRIP layout.</p>
+    <table class="param-table">
+      <tr><th>Parameter</th><th>Range</th><th>Description</th></tr>
+      <tr><td>Spacing</td><td>1 &ndash; 100</td><td>Controls how spread out the random positions are</td></tr>
+    </table>
+
+    <h3 id="grip">GRIP Layout</h3>
+    <p>A multi-level graph drawing algorithm that produces high-quality layouts for large graphs. It works by coarsening the graph into progressively smaller versions, computing a layout at the coarsest level, and then refining it back down to the original graph.</p>
+    <table class="param-table">
+      <tr><th>Parameter</th><th>Range</th><th>Description</th></tr>
+      <tr><td>Ideal edge length</td><td>1 &ndash; 100</td><td>Target edge length for the layout</td></tr>
+      <tr><td>Rounds per level</td><td>1 &ndash; 50</td><td>Number of refinement iterations at each coarsening level. More rounds produce better layouts but take longer.</td></tr>
+    </table>
+    <p>GRIP is well-suited for graphs with hundreds or thousands of nodes where force-directed simulation would be too slow to converge.</p>
+  </section>
+
+  <div class="page-nav">
+    <a href="/docs/tools/">&larr; Tools</a>
+    <span class="spacer"></span>
+    <a href="/docs/ui/">User Interface &rarr;</a>
+  </div>
+
+</main>

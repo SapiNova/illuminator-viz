@@ -1,0 +1,3 @@
+# Generated documentation HTML (edit docs-src/ and run npm run build:docs)
+docs/index.html
+docs/**/*.html
