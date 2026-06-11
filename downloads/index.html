@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downloads - Illuminator</title>
+    <link rel="icon" type="image/x-icon" href="../public/favicon.ico">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        background: 'hsl(0 0% 4%)',
+                        foreground: 'hsl(210 40% 98%)',
+                        card: 'hsl(0 0% 6%)',
+                        'card-foreground': 'hsl(210 40% 98%)',
+                        primary: 'hsl(217 91% 60%)',
+                        'primary-foreground': 'hsl(0 0% 100%)',
+                        muted: 'hsl(0 0% 15%)',
+                        'muted-foreground': 'hsl(215 20% 65%)',
+                        border: 'hsl(217 32% 17%)',
+                        glow: 'hsl(217 91% 60%)',
+                        surface: {
+                            DEFAULT: 'hsl(0 0% 8%)',
+                            elevated: 'hsl(0 0% 12%)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            border-color: hsl(217 32% 17%);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: 100dvh;
+            background-color: hsl(0 0% 4%);
+            color: hsl(210 40% 98%);
+            font-family: 'Inter', system-ui, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, hsl(217 91% 60%), hsl(210 100% 65%));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .glow-border {
+            box-shadow: 0 0 20px hsl(217 91% 60% / 0.3);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.15s ease;
+            outline: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn:focus-visible {
+            outline: 2px solid hsl(217 91% 60%);
+            outline-offset: 2px;
+        }
+
+        .btn[aria-disabled="true"] {
+            cursor: not-allowed;
+            opacity: 0.58;
+        }
+
+        .btn svg {
+            pointer-events: none;
+            width: 1rem;
+            height: 1rem;
+            flex-shrink: 0;
+        }
+
+        .btn-default {
+            background-color: hsl(217 91% 60%);
+            color: white;
+        }
+
+        .btn-default:hover {
+            background-color: hsl(217 91% 50%);
+        }
+
+        .btn-outline {
+            border: 1px solid hsl(217 32% 17%);
+            background-color: hsl(0 0% 4%);
+            color: hsl(210 40% 98%);
+        }
+
+        .btn-outline:hover {
+            background-color: hsl(217 91% 60% / 0.1);
+            border-color: hsl(217 91% 60%);
+        }
+
+        .btn-lg {
+            height: 2.75rem;
+            padding: 0 2rem;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .container {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .container {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+        }
+
+        #graph-canvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            opacity: 1;
+            animation: fade-in 0.5s ease-out;
+        }
+
+        .downloads-section {
+            min-height: calc(100vh - 8.5rem);
+            min-height: calc(100dvh - 8.5rem);
+        }
+
+        @media (max-width: 767px) {
+            .downloads-section {
+                min-height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="graph-canvas"></canvas>
+
+    <header class="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+        <div class="container">
+            <div class="flex items-center justify-between h-16">
+                <a href="../" class="text-xl font-bold tracking-tight gradient-text">
+                    Illuminator
+                </a>
+
+                <nav class="hidden md:flex items-center gap-1">
+                    <a href="../#what-it-is" class="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+                        What It Is
+                    </a>
+                    <a href="../docs/" class="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+                        Documentation
+                    </a>
+                    <a href="../#get-started" class="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+                        Get Started
+                    </a>
+                </nav>
+
+                <a href="../#get-started" class="hidden md:inline-flex btn btn-default glow-border h-10 px-4">
+                    <i data-lucide="mail"></i>
+                    Request Beta Access
+                </a>
+
+                <button id="mobile-menu-btn" class="md:hidden p-2 text-muted-foreground hover:text-foreground" aria-label="Toggle menu">
+                    <i data-lucide="menu" id="menu-icon"></i>
+                </button>
+            </div>
+
+            <div id="mobile-menu" class="hidden md:hidden py-4 border-t border-border">
+                <nav class="flex flex-col gap-2">
+                    <a href="../#what-it-is" class="px-4 py-3 text-left text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-md transition-colors">
+                        What It Is
+                    </a>
+                    <a href="../docs/" class="px-4 py-3 text-left text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-md transition-colors">
+                        Documentation
+                    </a>
+                    <a href="../#get-started" class="px-4 py-3 text-left text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-md transition-colors">
+                        Get Started
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="relative z-10">
+        <section class="downloads-section relative flex items-center justify-center pt-20 pb-8">
+            <div class="container">
+                <div class="max-w-4xl mx-auto text-center mb-8">
+                    <p class="text-sm font-medium uppercase tracking-[0.18em] text-primary mb-3 animate-fade-in">
+                        Illuminator downloads
+                    </p>
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4 animate-fade-in">
+                        Choose your <span class="gradient-text">desktop build</span>
+                    </h1>
+                    <p class="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto animate-fade-in" style="animation-delay: 0.1s;">
+                        Install Illuminator for local, GPU-accelerated exploration of large-scale graph data.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto animate-fade-in" style="animation-delay: 0.2s;">
+                    <article class="group flex h-full flex-col p-5 rounded-lg bg-card/70 border border-primary/50 glow-border transition-all duration-300">
+                        <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                            <i data-lucide="monitor-down" class="w-6 h-6 text-primary"></i>
+                        </div>
+                        <h2 class="text-xl font-semibold mb-3">Windows x86</h2>
+                        <p class="text-sm text-muted-foreground mb-5 min-h-12">
+                            Download the Windows desktop build for x86 systems.
+                        </p>
+                        <a href="https://github.com/SapiNova/illuminator-viz/releases/download/v0.8-beta/Illuminator_0-8-0_winx86.exe" class="btn btn-default btn-lg w-full mt-auto">
+                            <i data-lucide="download"></i>
+                            Download for Windows
+                        </a>
+                    </article>
+
+                    <article class="flex h-full flex-col p-5 rounded-lg bg-card/50 border border-border transition-all duration-300">
+                        <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                            <i data-lucide="terminal" class="w-6 h-6 text-primary"></i>
+                        </div>
+                        <h2 class="text-xl font-semibold mb-3">Linux</h2>
+                        <p class="text-sm text-muted-foreground mb-5 min-h-12">
+                            Native Linux builds are in progress.
+                        </p>
+                        <span class="btn btn-outline btn-lg w-full mt-auto" aria-disabled="true">
+                            <i data-lucide="clock"></i>
+                            Coming Soon
+                        </span>
+                    </article>
+
+                    <article class="flex h-full flex-col p-5 rounded-lg bg-card/50 border border-border transition-all duration-300">
+                        <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                            <i data-lucide="laptop" class="w-6 h-6 text-primary"></i>
+                        </div>
+                        <h2 class="text-xl font-semibold mb-3">macOS</h2>
+                        <p class="text-sm text-muted-foreground mb-5 min-h-12">
+                            macOS builds are in progress.
+                        </p>
+                        <span class="btn btn-outline btn-lg w-full mt-auto" aria-disabled="true">
+                            <i data-lucide="clock"></i>
+                            Coming Soon
+                        </span>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="relative z-10 py-8 border-t border-border bg-card/30">
+        <div class="container">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex flex-col items-center md:items-start gap-2">
+                    <span class="text-lg font-bold gradient-text">Illuminator</span>
+                    <span class="text-sm text-muted-foreground">
+                        &copy; <span id="current-year"></span> Illuminator. All rights reserved.
+                    </span>
+                </div>
+
+                <div class="flex items-center gap-6">
+                    <a href="../docs/" class="text-muted-foreground hover:text-foreground transition-colors" aria-label="Documentation">
+                        <i data-lucide="book-open" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+
+        function toggleMobileMenu() {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                menuIcon.setAttribute('data-lucide', 'x');
+            } else {
+                mobileMenu.classList.add('hidden');
+                menuIcon.setAttribute('data-lucide', 'menu');
+            }
+            lucide.createIcons();
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+
+        (function() {
+            const canvas = document.getElementById('graph-canvas');
+            const ctx = canvas.getContext('2d');
+
+            if (!canvas || !ctx) return;
+
+            let nodes = [];
+            let animationId;
+            const connectionDistance = 150;
+            const primaryColor = { r: 59, g: 130, b: 246 };
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                initNodes();
+            }
+
+            function initNodes() {
+                const nodeCount = Math.min(50, Math.floor((canvas.width * canvas.height) / 25000));
+                nodes = [];
+
+                for (let i = 0; i < nodeCount; i++) {
+                    nodes.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        vx: (Math.random() - 0.5) * 0.3,
+                        vy: (Math.random() - 0.5) * 0.3,
+                        radius: Math.random() * 2 + 2,
+                        pulsePhase: Math.random() * Math.PI * 2
+                    });
+                }
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const time = Date.now() * 0.001;
+
+                nodes.forEach((node, i) => {
+                    node.x += node.vx;
+                    node.y += node.vy;
+
+                    if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
+                    if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
+
+                    node.x = Math.max(0, Math.min(canvas.width, node.x));
+                    node.y = Math.max(0, Math.min(canvas.height, node.y));
+
+                    for (let j = i + 1; j < nodes.length; j++) {
+                        const other = nodes[j];
+                        const dx = other.x - node.x;
+                        const dy = other.y - node.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+
+                        if (distance < connectionDistance) {
+                            const opacity = (1 - distance / connectionDistance) * 0.3;
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(${primaryColor.r}, ${primaryColor.g}, ${primaryColor.b}, ${opacity})`;
+                            ctx.lineWidth = 1;
+                            ctx.moveTo(node.x, node.y);
+                            ctx.lineTo(other.x, other.y);
+                            ctx.stroke();
+                        }
+                    }
+
+                    const pulse = Math.sin(time * 2 + node.pulsePhase) * 0.3 + 0.7;
+                    const nodeOpacity = pulse * 0.6;
+
+                    ctx.beginPath();
+                    ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(${primaryColor.r}, ${primaryColor.g}, ${primaryColor.b}, ${nodeOpacity})`;
+                    ctx.fill();
+
+                    const gradient = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, node.radius * 3);
+                    gradient.addColorStop(0, `rgba(${primaryColor.r}, ${primaryColor.g}, ${primaryColor.b}, ${nodeOpacity * 0.3})`);
+                    gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
+                    ctx.beginPath();
+                    ctx.arc(node.x, node.y, node.radius * 3, 0, Math.PI * 2);
+                    ctx.fillStyle = gradient;
+                    ctx.fill();
+                });
+
+                animationId = requestAnimationFrame(animate);
+            }
+
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            animate();
+
+            window.addEventListener('beforeunload', () => {
+                if (animationId) {
+                    cancelAnimationFrame(animationId);
+                }
+                window.removeEventListener('resize', resizeCanvas);
+            });
+        })();
+    </script>
+</body>
+</html>
